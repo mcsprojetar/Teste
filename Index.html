@@ -1,0 +1,3092 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#FF6B35">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Pedido Fácil">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Pedido Fácil">
+    <meta name="description" content="Sistema de Cadastro de Clientes e Pedidos - Gestão Completa">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjM4LjQiIGZpbGw9IiNGRjZCMzUiLz48dGV4dCB4PSI5NiIgeT0iMTEwIiBmb250LXNpemU9IjgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSI+8J+TpjwvdGV4dD48L3N2Zz4=">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIuOCIgZmlsbD0iI0ZGNkIzNSIvPjx0ZXh0IHg9IjMyIiB5PSI0MiIgZm9udC1zaXplPSIzMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPvCfk6Y8L3RleHQ+PC9zdmc+">
+    
+    <title>Pedido Fácil - Sistema de Gestão</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <style>
+        /* ==================== CSS CUSTOM PROPERTIES ==================== */
+        :root {
+            /* Cores Principais */
+            --primary: #FF6B35;
+            --primary-dark: #E55A2B;
+            --primary-light: #FF8C5A;
+            --primary-rgb: 255, 107, 53;
+            
+            /* Cores Secundárias */
+            --secondary: #2EC4B6;
+            --secondary-dark: #25A99D;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --info: #3B82F6;
+            --purple: #8B5CF6;
+            
+            /* Backgrounds */
+            --bg-primary: #F9FAFB;
+            --bg-secondary: #F3F4F6;
+            --bg-tertiary: #E5E7EB;
+            --surface: #FFFFFF;
+            --surface-hover: #F9FAFB;
+            
+            /* Textos */
+            --text-primary: #111827;
+            --text-secondary: #4B5563;
+            --text-tertiary: #9CA3AF;
+            --text-inverse: #FFFFFF;
+            
+            /* Bordas */
+            --border-light: #F3F4F6;
+            --border-medium: #E5E7EB;
+            --border-dark: #D1D5DB;
+            
+            /* Sombras */
+            --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+            
+            /* Border Radius */
+            --radius-xs: 4px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+            
+            /* Transições */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Layout */
+            --header-height: 56px;
+            --bottom-nav-height: 64px;
+            --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+            --safe-area-top: env(safe-area-inset-top, 0px);
+            
+            /* Tipografia */
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            
+            /* Z-index */
+            --z-dropdown: 100;
+            --z-sticky: 200;
+            --z-fixed: 300;
+            --z-modal: 400;
+            --z-popover: 500;
+            --z-tooltip: 600;
+        }
+
+        /* Tema Escuro */
+        .dark {
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --surface: #1E293B;
+            --surface-hover: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #94A3B8;
+            --text-tertiary: #64748B;
+            --border-light: #1E293B;
+            --border-medium: #334155;
+            --border-dark: #475569;
+            --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.6);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.7);
+        }
+
+        /* ==================== RESET GLOBAL ==================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            height: 100%;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding-top: var(--header-height);
+            padding-bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom));
+            transition: background var(--transition-base), color var(--transition-base);
+        }
+
+        /* Remover highlight em dispositivos móveis */
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        input, textarea, select {
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-tertiary);
+            border-radius: var(--radius-full);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
+        /* ==================== HEADER ==================== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: var(--surface);
+            border-bottom: 1px solid var(--border-medium);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+            padding-top: var(--safe-area-top);
+            z-index: var(--z-fixed);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: var(--shadow-xs);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: var(--font-size-lg);
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .header-brand i {
+            font-size: 1.5rem;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* ==================== BOTÃO DE ÍCONE ==================== */
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            border: none;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .icon-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* ==================== CONTAINER PRINCIPAL ==================== */
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 0.75rem;
+        }
+
+        @media (min-width: 640px) {
+            .app-container {
+                max-width: 640px;
+                padding: 1rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .app-container {
+                max-width: 768px;
+                padding: 1.25rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .app-container {
+                max-width: 960px;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .app-container {
+                max-width: 1024px;
+            }
+        }
+
+        /* ==================== BOTTOM NAVIGATION ==================== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--bottom-nav-height);
+            background: var(--surface);
+            border-top: 1px solid var(--border-medium);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0.25rem 0.5rem;
+            padding-bottom: var(--safe-area-bottom);
+            z-index: var(--z-fixed);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            padding: 0.35rem 0.5rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            color: var(--text-tertiary);
+            border: none;
+            background: none;
+            font-family: var(--font-family);
+            font-size: 0.65rem;
+            font-weight: 500;
+            min-width: 56px;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .nav-item i {
+            font-size: 1.25rem;
+            transition: all var(--transition-fast);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            width: 24px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 0 0 var(--radius-xs) var(--radius-xs);
+        }
+
+        .nav-item:active {
+            transform: scale(0.95);
+        }
+
+        /* ==================== TABS ==================== */
+        .tab-content {
+            display: none;
+            animation: fadeSlideIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==================== CARDS ==================== */
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            box-shadow: var(--shadow-xs);
+            border: 1px solid var(--border-light);
+            margin-bottom: 0.75rem;
+            transition: box-shadow var(--transition-base);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-size: var(--font-size-base);
+            color: var(--text-primary);
+        }
+
+        .card-header i {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        @media (min-width: 768px) {
+            .card {
+                padding: 1.25rem;
+            }
+        }
+
+        /* ==================== WELCOME CARD ==================== */
+        .welcome-card {
+            background: linear-gradient(135deg, #FF6B35, #FF8C5A);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            color: white;
+            margin-bottom: 0.75rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .welcome-card::after {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 160px;
+            height: 160px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .welcome-card h2 {
+            font-size: var(--font-size-xl);
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-card p {
+            font-size: var(--font-size-sm);
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 0.75rem;
+        }
+
+        /* ==================== STATS GRID ==================== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 0.6rem;
+            border-radius: var(--radius-sm);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: var(--font-size-lg);
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: var(--font-size-xs);
+            opacity: 0.9;
+            margin-top: 0.15rem;
+        }
+
+        @media (min-width: 480px) {
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* ==================== MENU GRID ==================== */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .menu-item {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 1rem 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-light);
+        }
+
+        .menu-item:active {
+            transform: scale(0.97);
+            background: var(--bg-secondary);
+        }
+
+        .menu-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .menu-label {
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .menu-badge {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--danger);
+            color: white;
+            border-radius: var(--radius-full);
+            min-width: 20px;
+            height: 20px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 0.3rem;
+        }
+
+        @media (min-width: 480px) {
+            .menu-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .menu-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        /* ==================== FORMULÁRIOS ==================== */
+        .form-group {
+            margin-bottom: 0.75rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.625rem 0.75rem;
+            border: 1.5px solid var(--border-medium);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all var(--transition-fast);
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+        }
+
+        .form-input:invalid,
+        .form-select:invalid {
+            border-color: var(--danger);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .form-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%234B5563' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            padding-right: 2.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+
+        @media (min-width: 480px) {
+            .form-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .form-row {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .form-error {
+            color: var(--danger);
+            font-size: var(--font-size-xs);
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .form-input:invalid ~ .form-error {
+            display: block;
+        }
+
+        /* ==================== BOTÕES ==================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.625rem 1.125rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-family);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            min-height: 40px;
+            white-space: nowrap;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .btn:hover::after {
+            opacity: 1;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: #1E293B;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-info {
+            background: var(--info);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--border-medium);
+            color: var(--text-secondary);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-sm {
+            padding: 0.35rem 0.65rem;
+            font-size: 0.7rem;
+            min-height: 32px;
+        }
+
+        .btn-lg {
+            padding: 0.75rem 1.5rem;
+            font-size: var(--font-size-base);
+            min-height: 48px;
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 360px) {
+            .btn-group {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* ==================== TABELAS ==================== */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-medium);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: var(--font-size-sm);
+        }
+
+        thead {
+            background: var(--bg-secondary);
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        th {
+            padding: 0.75rem 0.5rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: var(--font-size-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none;
+            transition: color var(--transition-fast);
+        }
+
+        th:hover {
+            color: var(--primary);
+        }
+
+        th i {
+            font-size: 0.6rem;
+            margin-left: 0.25rem;
+        }
+
+        td {
+            padding: 0.625rem 0.5rem;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-primary);
+        }
+
+        tbody tr {
+            transition: background var(--transition-fast);
+        }
+
+        tbody tr:hover {
+            background: var(--surface-hover);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        @media (max-width: 480px) {
+            table {
+                font-size: var(--font-size-xs);
+            }
+            th, td {
+                padding: 0.5rem 0.35rem;
+            }
+        }
+
+        /* ==================== BADGES ==================== */
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: var(--radius-full);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+
+        .badge-pending {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .badge-ordered {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .badge-delivered {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .badge-paid {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .badge-partial {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .badge-unpaid {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .dark .badge-pending {
+            background: #78350F;
+            color: #FEF3C7;
+        }
+
+        .dark .badge-ordered {
+            background: #1E3A8A;
+            color: #DBEAFE;
+        }
+
+        .dark .badge-delivered {
+            background: #064E3B;
+            color: #D1FAE5;
+        }
+
+        .dark .badge-paid {
+            background: #064E3B;
+            color: #D1FAE5;
+        }
+
+        .dark .badge-partial {
+            background: #78350F;
+            color: #FEF3C7;
+        }
+
+        .dark .badge-unpaid {
+            background: #7F1D1D;
+            color: #FEE2E2;
+        }
+
+        /* ==================== PRODUTOS ==================== */
+        .products-section {
+            border: 2px dashed var(--border-medium);
+            border-radius: var(--radius-md);
+            padding: 0.75rem;
+            margin: 0.75rem 0;
+            background: var(--bg-secondary);
+        }
+
+        .product-item {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-left: 3px solid var(--secondary);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            animation: slideIn 0.2s ease;
+            transition: box-shadow var(--transition-fast);
+        }
+
+        .product-item:hover {
+            box-shadow: var(--shadow-sm);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+
+        @media (min-width: 480px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* ==================== TOTALS BAR ==================== */
+        .totals-bar {
+            background: linear-gradient(135deg, #FF6B35, #E55A2B);
+            border-radius: var(--radius-md);
+            padding: 0.75rem 1rem;
+            color: white;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            text-align: center;
+            margin-top: 0.75rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .total-item {
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .total-item span {
+            display: block;
+            font-size: var(--font-size-base);
+            font-weight: 800;
+            margin-top: 0.15rem;
+        }
+
+        /* ==================== SEARCH BAR ==================== */
+        .search-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 140px;
+            padding: 0.5rem 0.75rem;
+            border: 1.5px solid var(--border-medium);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all var(--transition-fast);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+        }
+
+        /* ==================== MODAL ==================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: var(--z-modal);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            animation: fadeIn 0.2s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-dialog {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 520px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+            animation: modalSlideUp 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-medium);
+            position: sticky;
+            top: 0;
+            background: var(--surface);
+            z-index: 1;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+
+        .modal-header h3 {
+            font-size: var(--font-size-base);
+            font-weight: 700;
+        }
+
+        .modal-body {
+            padding: 1rem;
+        }
+
+        .modal-footer {
+            padding: 1rem;
+            border-top: 1px solid var(--border-medium);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-full);
+            border: none;
+            background: var(--bg-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            transition: all var(--transition-fast);
+        }
+
+        .modal-close:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* ==================== TOAST ==================== */
+        .toast-container {
+            position: fixed;
+            top: calc(var(--header-height) + 0.5rem);
+            right: 0.75rem;
+            z-index: var(--z-tooltip);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-width: 360px;
+            pointer-events: none;
+        }
+
+        .toast {
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-md);
+            color: white;
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            box-shadow: var(--shadow-lg);
+            animation: toastIn 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            pointer-events: auto;
+            transition: all var(--transition-base);
+        }
+
+        .toast-success { background: var(--success); }
+        .toast-error { background: var(--danger); }
+        .toast-warning { background: var(--warning); color: #1E293B; }
+        .toast-info { background: var(--info); }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .toast-exit {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        /* ==================== OFFLINE BANNER ==================== */
+        .offline-banner {
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            right: 0;
+            background: var(--danger);
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            z-index: var(--z-sticky);
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .offline-banner.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        /* ==================== INSTALL PROMPT ==================== */
+        .install-prompt {
+            position: fixed;
+            bottom: calc(var(--bottom-nav-height) + 1rem);
+            left: 1rem;
+            right: 1rem;
+            background: var(--surface);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-lg);
+            padding: 0.75rem 1rem;
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: var(--z-popover);
+            box-shadow: var(--shadow-xl);
+            animation: modalSlideUp 0.3s ease;
+        }
+
+        .install-prompt.show {
+            display: flex;
+        }
+
+        /* ==================== UTILITÁRIOS ==================== */
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-left { text-align: left; }
+        .text-muted { color: var(--text-tertiary); }
+        .text-primary { color: var(--primary); }
+        .text-danger { color: var(--danger); }
+        .text-success { color: var(--success); }
+        .text-xs { font-size: var(--font-size-xs); }
+        .text-sm { font-size: var(--font-size-sm); }
+        .text-base { font-size: var(--font-size-base); }
+        .text-lg { font-size: var(--font-size-lg); }
+        .font-bold { font-weight: 700; }
+        .font-semibold { font-weight: 600; }
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .p-2 { padding: 1rem; }
+        .hidden { display: none !important; }
+        .w-full { width: 100%; }
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-3 { gap: 0.75rem; }
+        .cursor-pointer { cursor: pointer; }
+        .rounded { border-radius: var(--radius-sm); }
+    </style>
+</head>
+<body>
+    <!-- ==================== OFFLINE BANNER ==================== -->
+    <div class="offline-banner" id="offlineBanner">
+        <i class="fas fa-wifi"></i> Você está offline - Dados salvos localmente
+    </div>
+
+    <!-- ==================== HEADER ==================== -->
+    <header class="header">
+        <a href="#" class="header-brand" onclick="showTab('tab-home', document.querySelector('.nav-item'))">
+            <i class="fas fa-boxes"></i>
+            <span>Pedido Fácil</span>
+        </a>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="exportBackup()" title="Exportar Backup" aria-label="Exportar Backup">
+                <i class="fas fa-download"></i>
+            </button>
+            <button class="icon-btn" onclick="document.getElementById('importFile').click()" title="Importar Backup" aria-label="Importar Backup">
+                <i class="fas fa-upload"></i>
+            </button>
+            <input type="file" id="importFile" accept=".json" class="hidden" onchange="importBackup(event)">
+            <button class="icon-btn" onclick="toggleTheme()" title="Alternar Tema" aria-label="Alternar Tema">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==================== INSTALL PROMPT ==================== -->
+    <div class="install-prompt" id="installPrompt">
+        <span style="font-size:1.5rem;">📱</span>
+        <span style="flex:1;font-size:0.85rem;font-weight:600;">Instale este app no seu dispositivo!</span>
+        <button class="btn btn-primary btn-sm" onclick="installApp()">Instalar</button>
+        <button class="icon-btn" onclick="dismissInstall()" style="flex-shrink:0;">✕</button>
+    </div>
+
+    <!-- ==================== TOAST CONTAINER ==================== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ==================== MAIN CONTAINER ==================== -->
+    <main class="app-container" role="main">
+        <!-- ==================== HOME TAB ==================== -->
+        <section id="tab-home" class="tab-content active" aria-labelledby="home-tab">
+            <div class="welcome-card">
+                <h2>👋 Bem-vindo!</h2>
+                <p>Gerencie seus pedidos de forma simples e rápida</p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="homeOrders">0</div>
+                        <div class="stat-label">Pedidos</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="homeClients">0</div>
+                        <div class="stat-label">Clientes</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="homeSales">R$ 0,00</div>
+                        <div class="stat-label">Vendas</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="homeProfit">R$ 0,00</div>
+                        <div class="stat-label">Lucro</div>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="menu-grid" aria-label="Menu principal">
+                <div class="menu-item" onclick="showTab('tab-dashboard', this)" onkeydown="handleMenuKeydown(event, this)" role="button" tabindex="0">
+                    <span class="menu-icon">📊</span>
+                    <span class="menu-label">Dashboard</span>
+                </div>
+                <div class="menu-item" onclick="showTab('tab-cadastro', this)" onkeydown="handleMenuKeydown(event, this)" role="button" tabindex="0">
+                    <span class="menu-icon">📝</span>
+                    <span class="menu-label">Novo Pedido</span>
+                    <span class="menu-badge" id="pendingBadge">0</span>
+                </div>
+                <div class="menu-item" onclick="showTab('tab-lista', this)" onkeydown="handleMenuKeydown(event, this)" role="button" tabindex="0">
+                    <span class="menu-icon">👥</span>
+                    <span class="menu-label">Clientes</span>
+                </div>
+                <div class="menu-item" onclick="showTab('tab-fornecedor', this)" onkeydown="handleMenuKeydown(event, this)" role="button" tabindex="0">
+                    <span class="menu-icon">🏭</span>
+                    <span class="menu-label">Compras</span>
+                </div>
+                <div class="menu-item" onclick="showTab('tab-relatorios', this)" onkeydown="handleMenuKeydown(event, this)" role="button" tabindex="0">
+                    <span class="menu-icon">📈</span>
+                    <span class="menu-label">Relatórios</span>
+                </div>
+            </nav>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-clock"></i>
+                    <span>Últimos Pedidos</span>
+                </div>
+                <div class="table-wrapper">
+                    <table aria-label="Últimos pedidos">
+                        <thead>
+                            <tr>
+                                <th>Pedido</th>
+                                <th>Cliente</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="homeRecentOrders">
+                            <tr>
+                                <td colspan="4" class="text-center text-muted p-2">Nenhum pedido cadastrado</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== DASHBOARD TAB ==================== -->
+        <section id="tab-dashboard" class="tab-content" aria-labelledby="dashboard-tab">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Visão Geral</span>
+                </div>
+                <div class="stats-grid" style="background:transparent;">
+                    <div class="stat-item" style="background:var(--bg-secondary);">
+                        <div class="stat-value" id="dashOrders" style="color:var(--primary);">0</div>
+                        <div class="stat-label">Pedidos</div>
+                    </div>
+                    <div class="stat-item" style="background:var(--bg-secondary);">
+                        <div class="stat-value" id="dashClients" style="color:var(--info);">0</div>
+                        <div class="stat-label">Clientes</div>
+                    </div>
+                    <div class="stat-item" style="background:var(--bg-secondary);">
+                        <div class="stat-value" id="dashSales" style="color:var(--success);">R$ 0,00</div>
+                        <div class="stat-label">Vendas</div>
+                    </div>
+                    <div class="stat-item" style="background:var(--bg-secondary);">
+                        <div class="stat-value" id="dashProfit" style="color:var(--purple);">R$ 0,00</div>
+                        <div class="stat-label">Lucro</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Gráficos</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr;gap:1.5rem;">
+                    <div>
+                        <h4 class="text-sm font-semibold mb-1">Vendas Recentes</h4>
+                        <canvas id="chartSales" height="220" aria-label="Gráfico de vendas"></canvas>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-semibold mb-1">Status dos Pedidos</h4>
+                        <canvas id="chartStatus" height="220" aria-label="Gráfico de status"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CADASTRO TAB ==================== -->
+        <section id="tab-cadastro" class="tab-content" aria-labelledby="cadastro-tab">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Novo Pedido</span>
+                </div>
+                
+                <form id="orderForm" novalidate onsubmit="return false;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="orderNumber">Nº Pedido</label>
+                            <input type="text" id="orderNumber" class="form-input" readonly tabindex="-1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="clientName">Cliente *</label>
+                            <input type="text" id="clientName" class="form-input" required placeholder="Nome completo do cliente" autocomplete="name">
+                            <span class="form-error">Campo obrigatório</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="clientCity">Cidade *</label>
+                            <input type="text" id="clientCity" class="form-input" required placeholder="Cidade do cliente" autocomplete="address-level2">
+                            <span class="form-error">Campo obrigatório</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="clientPhone">Telefone</label>
+                            <input type="tel" id="clientPhone" class="form-input" placeholder="(00) 00000-0000" autocomplete="tel">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="orderDate">Data *</label>
+                            <input type="date" id="orderDate" class="form-input" required>
+                            <span class="form-error">Campo obrigatório</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="orderStatus">Status</label>
+                            <select id="orderStatus" class="form-select">
+                                <option value="Pendente">⏳ Pendente</option>
+                                <option value="Encomendado">📦 Encomendado</option>
+                                <option value="Entregue">✅ Entregue</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="paymentStatus">Pagamento</label>
+                            <select id="paymentStatus" class="form-select">
+                                <option value="Pendente">❌ Pendente</option>
+                                <option value="Parcial">⚠️ Parcial</option>
+                                <option value="Pago">✅ Pago</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="supplierSelect">Fornecedor</label>
+                            <select id="supplierSelect" class="form-select">
+                                <option value="">Selecione um fornecedor...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="orderNotes">Observações</label>
+                            <textarea id="orderNotes" class="form-textarea" rows="2" placeholder="Observações sobre o pedido..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Seção de Produtos -->
+                    <div class="products-section">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="font-semibold text-sm">📦 Produtos do Pedido</span>
+                            <button type="button" class="btn btn-outline btn-sm" onclick="addProduct()">
+                                <i class="fas fa-plus"></i> Adicionar
+                            </button>
+                        </div>
+                        
+                        <div id="productsList"></div>
+                        
+                        <!-- Totais -->
+                        <div class="totals-bar">
+                            <div class="total-item">
+                                Total Compra
+                                <span id="formPurchase">R$ 0,00</span>
+                            </div>
+                            <div class="total-item">
+                                Total Venda
+                                <span id="formSale">R$ 0,00</span>
+                            </div>
+                            <div class="total-item">
+                                Lucro Previsto
+                                <span id="formProfit">R$ 0,00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botões de Ação -->
+                    <div class="btn-group mt-2">
+                        <button type="button" class="btn btn-primary btn-lg" onclick="saveOrder()">
+                            <i class="fas fa-save"></i> Salvar Pedido
+                        </button>
+                        <button type="button" class="btn btn-warning" onclick="editCurrentOrder()" id="editOrderBtn" style="display:none;">
+                            <i class="fas fa-edit"></i> Atualizar
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="deleteCurrentOrder()" id="deleteOrderBtn" style="display:none;">
+                            <i class="fas fa-trash"></i> Excluir
+                        </button>
+                        <button type="button" class="btn btn-outline" onclick="clearForm()">
+                            <i class="fas fa-eraser"></i> Limpar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ==================== LISTA DE CLIENTES TAB ==================== -->
+        <section id="tab-lista" class="tab-content" aria-labelledby="lista-tab">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-users"></i>
+                    <span>Clientes</span>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="search" class="search-input" id="searchName" placeholder="🔍 Buscar por nome..." oninput="renderClientList()" aria-label="Buscar por nome">
+                    <input type="search" class="search-input" id="searchCity" placeholder="🏙️ Buscar por cidade..." oninput="renderClientList()" aria-label="Buscar por cidade">
+                    <select class="form-select" id="filterStatus" onchange="renderClientList()" style="min-width:130px;" aria-label="Filtrar por status">
+                        <option value="">Todos os Status</option>
+                        <option value="Pendente">⏳ Pendente</option>
+                        <option value="Encomendado">📦 Encomendado</option>
+                        <option value="Entregue">✅ Entregue</option>
+                    </select>
+                </div>
+                
+                <div class="table-wrapper">
+                    <table aria-label="Lista de clientes">
+                        <thead>
+                            <tr>
+                                <th id="th-orderNumber" onclick="sortOrders('orderNumber')" aria-sort="none">Pedido <i class="fas fa-sort"></i></th>
+                                <th id="th-clientName" onclick="sortOrders('clientName')" aria-sort="none">Cliente <i class="fas fa-sort"></i></th>
+                                <th>Prod.</th>
+                                <th id="th-totalSale" onclick="sortOrders('totalSale')" aria-sort="none">Valor <i class="fas fa-sort"></i></th>
+                                <th id="th-orderDate" onclick="sortOrders('orderDate')" aria-sort="none">Data <i class="fas fa-sort"></i></th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clientTableBody"></tbody>
+                    </table>
+                </div>
+                
+                <div class="flex justify-between items-center mt-2">
+                    <span class="text-sm text-muted">Total de pedidos: <strong id="clientCount">0</strong></span>
+                    <span class="text-sm font-bold" style="color:var(--primary);">Total Vendas: <strong id="clientTotal">R$ 0,00</strong></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== FORNECEDOR TAB ==================== -->
+        <section id="tab-fornecedor" class="tab-content" aria-labelledby="fornecedor-tab">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-industry"></i>
+                    <span>Meus Fornecedores</span>
+                </div>
+                <div class="search-bar">
+                    <input type="text" class="search-input" id="newSupplierName" placeholder="Nome do fornecedor..." aria-label="Nome do novo fornecedor">
+                    <button class="btn btn-primary btn-sm" onclick="addSupplier()">
+                        <i class="fas fa-plus"></i> Adicionar
+                    </button>
+                </div>
+                <div id="supplierChipsList" class="flex gap-2" style="flex-wrap:wrap;"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-truck"></i>
+                    <span>Lista para Fornecedor</span>
+                </div>
+                
+                <div class="btn-group mb-2">
+                    <button class="btn btn-outline btn-sm" onclick="window.print()" aria-label="Imprimir">
+                        <i class="fas fa-print"></i> Imprimir
+                    </button>
+                    <button class="btn btn-outline btn-sm" onclick="exportToExcel()" aria-label="Exportar Excel">
+                        <i class="fas fa-file-excel"></i> Excel
+                    </button>
+                    <button class="btn btn-outline btn-sm" onclick="shareWhatsApp()" aria-label="Compartilhar WhatsApp">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </button>
+                </div>
+                
+                <div class="table-wrapper">
+                    <table aria-label="Lista para fornecedor">
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Qtd Total</th>
+                                <th>Valor Unit.</th>
+                                <th>Valor Total</th>
+                                <th>Fornecedor</th>
+                            </tr>
+                        </thead>
+                        <tbody id="supplierTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== RELATÓRIOS TAB ==================== -->
+        <section id="tab-relatorios" class="tab-content" aria-labelledby="relatorios-tab">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Relatórios</span>
+                </div>
+                
+                <div class="form-row mb-2">
+                    <select id="reportPeriod" class="form-select" onchange="updateReportCharts()" aria-label="Período do relatório">
+                        <option value="today">📅 Hoje</option>
+                        <option value="week">📅 Esta Semana</option>
+                        <option value="month" selected>📅 Este Mês</option>
+                        <option value="year">📅 Este Ano</option>
+                        <option value="all">📅 Todo Período</option>
+                    </select>
+                    <button class="btn btn-primary btn-sm" onclick="updateReportCharts()">
+                        <i class="fas fa-sync-alt"></i> Atualizar
+                    </button>
+                    <button class="btn btn-outline btn-sm" onclick="exportReportExcel()">
+                        <i class="fas fa-download"></i> Exportar
+                    </button>
+                </div>
+                
+                <div style="display:grid;grid-template-columns:1fr;gap:1.5rem;">
+                    <div>
+                        <h4 class="text-sm font-semibold mb-1">Vendas por Período</h4>
+                        <canvas id="reportSalesChart" height="220" aria-label="Gráfico de vendas por período"></canvas>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-semibold mb-1">Lucro por Período</h4>
+                        <canvas id="reportProfitChart" height="220" aria-label="Gráfico de lucro por período"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== BOTTOM NAVIGATION ==================== -->
+    <nav class="bottom-nav" role="navigation" aria-label="Navegação principal">
+        <button class="nav-item active" onclick="showTab('tab-home', this)" aria-label="Início" aria-current="page">
+            <i class="fas fa-home"></i>
+            <span>Início</span>
+        </button>
+        <button class="nav-item" onclick="showTab('tab-cadastro', this)" aria-label="Novo Pedido">
+            <i class="fas fa-plus-circle"></i>
+            <span>Pedido</span>
+        </button>
+        <button class="nav-item" onclick="showTab('tab-lista', this)" aria-label="Clientes">
+            <i class="fas fa-users"></i>
+            <span>Clientes</span>
+        </button>
+        <button class="nav-item" onclick="showTab('tab-fornecedor', this)" aria-label="Compras">
+            <i class="fas fa-truck"></i>
+            <span>Compras</span>
+        </button>
+        <button class="nav-item" onclick="showTab('tab-relatorios', this)" aria-label="Relatórios">
+            <i class="fas fa-chart-bar"></i>
+            <span>Relatórios</span>
+        </button>
+    </nav>
+
+    <!-- ==================== MODAL DE DETALHES ==================== -->
+    <div class="modal-overlay" id="detailsModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3 id="modalTitle">📋 Detalhes do Pedido</h3>
+                <button class="modal-close" onclick="closeModal()" aria-label="Fechar modal">✕</button>
+            </div>
+            <div class="modal-body" id="modalContent"></div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script>
+        'use strict';
+
+        // ==================== CONFIGURAÇÃO PWA ====================
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => {
+                        console.log('✅ Service Worker registrado:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.warn('⚠️ Service Worker não registrado:', error);
+                    });
+            });
+        }
+
+        // ==================== INSTALL PROMPT ====================
+        let deferredPrompt = null;
+        const installPrompt = document.getElementById('installPrompt');
+        
+        window.addEventListener('beforeinstallprompt', (event) => {
+            event.preventDefault();
+            deferredPrompt = event;
+            
+            const dismissed = localStorage.getItem('pf_installDismissed');
+            if (!dismissed || Date.now() - parseInt(dismissed) > 7 * 24 * 60 * 60 * 1000) {
+                setTimeout(() => installPrompt.classList.add('show'), 2000);
+            }
+        });
+
+        function installApp() {
+            if (!deferredPrompt) {
+                showToast('Instalação não disponível no momento', 'warning');
+                return;
+            }
+            
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    showToast('Aplicativo instalado com sucesso! 🎉', 'success');
+                }
+                deferredPrompt = null;
+                installPrompt.classList.remove('show');
+            });
+        }
+
+        function dismissInstall() {
+            installPrompt.classList.remove('show');
+            localStorage.setItem('pf_installDismissed', Date.now().toString());
+        }
+
+        window.addEventListener('appinstalled', () => {
+            installPrompt.classList.remove('show');
+            console.log('✅ Aplicativo instalado');
+        });
+
+        // ==================== MONITORAMENTO ONLINE/OFFLINE ====================
+        const offlineBanner = document.getElementById('offlineBanner');
+        
+        function updateOnlineStatus() {
+            if (navigator.onLine) {
+                offlineBanner.classList.remove('show');
+                document.body.classList.remove('offline');
+            } else {
+                offlineBanner.classList.add('show');
+                document.body.classList.add('offline');
+                setTimeout(() => offlineBanner.classList.remove('show'), 3000);
+            }
+        }
+        
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+
+        // ==================== GERENCIAMENTO DE ESTADO ====================
+        let state = {
+            orders: [],
+            suppliers: [],
+            currentEditIndex: null,
+            orderCounter: 0,
+            chartInstances: {
+                dashboard: {},
+                reports: {}
+            }
+        };
+
+        // Inicializar estado do localStorage
+        function loadState() {
+            try {
+                const savedOrders = localStorage.getItem('pf_orders');
+                const savedSuppliers = localStorage.getItem('pf_suppliers');
+                const savedCounter = localStorage.getItem('pf_orderCounter');
+                
+                state.orders = savedOrders ? JSON.parse(savedOrders) : [];
+                state.suppliers = savedSuppliers ? JSON.parse(savedSuppliers) : [];
+                state.orderCounter = savedCounter ? parseInt(savedCounter) : 0;
+                
+                // Validar dados carregados
+                if (!Array.isArray(state.orders)) state.orders = [];
+                if (!Array.isArray(state.suppliers)) state.suppliers = [];
+                if (isNaN(state.orderCounter)) state.orderCounter = 0;
+                
+            } catch (error) {
+                console.error('❌ Erro ao carregar dados:', error);
+                state.orders = [];
+                state.suppliers = [];
+                state.orderCounter = 0;
+                showToast('Erro ao carregar dados. Iniciando com dados limpos.', 'error');
+            }
+        }
+
+        function saveState() {
+            try {
+                localStorage.setItem('pf_orders', JSON.stringify(state.orders));
+                localStorage.setItem('pf_suppliers', JSON.stringify(state.suppliers));
+                localStorage.setItem('pf_orderCounter', state.orderCounter.toString());
+                return true;
+            } catch (error) {
+                console.error('❌ Erro ao salvar dados:', error);
+                
+                if (error.name === 'QuotaExceededError') {
+                    showToast('Armazenamento cheio! Exporte seus dados e limpe o cache.', 'error');
+                } else {
+                    showToast('Erro ao salvar dados. Verifique o armazenamento.', 'error');
+                }
+                return false;
+            }
+        }
+
+        // ==================== UTILITÁRIOS ====================
+        function toNumber(value, defaultValue = 0) {
+            if (value === null || value === undefined || value === '') return defaultValue;
+            const num = typeof value === 'string' ? 
+                parseFloat(value.replace(',', '.')) : 
+                parseFloat(value);
+            return isNaN(num) || !isFinite(num) ? defaultValue : num;
+        }
+
+        function roundCurrency(value) {
+            // Corrige erros de ponto flutuante (ex: 19.99*3 = 59.970000000000006)
+            return Math.round((toNumber(value) + Number.EPSILON) * 100) / 100;
+        }
+
+        function sanitizeNumericInput(inputEl) {
+            // Permite dígitos, uma única vírgula OU ponto decimal (BR ou padrão), remove o resto
+            let value = inputEl.value.replace(/[^\d.,]/g, '');
+            const parts = value.split(/[.,]/);
+            if (parts.length > 2) {
+                value = parts[0] + ',' + parts.slice(1).join('');
+            }
+            inputEl.value = value;
+        }
+
+        function formatCurrency(value) {
+            const num = toNumber(value);
+            return 'R$ ' + num.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(dateString);
+            if (!match) return 'Data inválida';
+            const [, year, month, day] = match;
+            return `${day}/${month}/${year}`;
+        }
+
+        function peekOrderNumber() {
+            // Apenas exibe qual seria o próximo número, sem consumi-lo
+            return `PED-${String(state.orderCounter + 1).padStart(4, '0')}`;
+        }
+
+        function commitOrderNumber() {
+            // Consome/persiste o próximo número - chamar somente ao salvar um pedido novo
+            state.orderCounter++;
+            saveState();
+            return `PED-${String(state.orderCounter).padStart(4, '0')}`;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ==================== SISTEMA DE TOAST ====================
+        const toastContainer = document.getElementById('toastContainer');
+        let toastQueue = [];
+        let toastTimeout = null;
+
+        function showToast(message, type = 'info') {
+            const icons = {
+                success: '✅',
+                error: '❌',
+                warning: '⚠️',
+                info: 'ℹ️'
+            };
+            
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `${icons[type] || icons.info} ${escapeHtml(message)}`;
+            toast.setAttribute('role', 'alert');
+            
+            toastContainer.appendChild(toast);
+            
+            // Remover após animação
+            setTimeout(() => {
+                toast.classList.add('toast-exit');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.remove();
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // ==================== TEMA ====================
+        function applyChartTheme() {
+            const isDark = document.body.classList.contains('dark');
+            if (typeof Chart !== 'undefined') {
+                Chart.defaults.color = isDark ? '#94A3B8' : '#4B5563';
+                Chart.defaults.borderColor = isDark ? '#334155' : '#E5E7EB';
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark');
+            const themeIcon = document.getElementById('themeIcon');
+            
+            if (themeIcon) {
+                themeIcon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+            }
+            
+            localStorage.setItem('pf_theme', isDark ? 'dark' : 'light');
+            
+            // Atualizar gráficos com novo tema
+            applyChartTheme();
+            updateAllCharts();
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('pf_theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.body.classList.add('dark');
+                const themeIcon = document.getElementById('themeIcon');
+                if (themeIcon) themeIcon.className = 'fas fa-sun';
+            }
+            applyChartTheme();
+        }
+
+        // ==================== NAVEGAÇÃO ====================
+        function handleMenuKeydown(event, element) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                element.click();
+            }
+        }
+
+        function showTab(tabId, clickedElement) {
+            // Ocultar todas as tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remover active de todos os nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                item.removeAttribute('aria-current');
+            });
+            
+            // Mostrar tab selecionada
+            const targetTab = document.getElementById(tabId);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
+            
+            // Ativar nav item correspondente
+            if (clickedElement) {
+                if (clickedElement.classList.contains('nav-item')) {
+                    clickedElement.classList.add('active');
+                    clickedElement.setAttribute('aria-current', 'page');
+                } else if (clickedElement.classList.contains('menu-item')) {
+                    const menuToNavMap = {
+                        'tab-dashboard': 0,
+                        'tab-cadastro': 1,
+                        'tab-lista': 2,
+                        'tab-fornecedor': 3,
+                        'tab-relatorios': 4
+                    };
+                    const navItems = document.querySelectorAll('.nav-item');
+                    const navIndex = menuToNavMap[tabId];
+                    if (navIndex !== undefined && navItems[navIndex]) {
+                        navItems[navIndex].classList.add('active');
+                        navItems[navIndex].setAttribute('aria-current', 'page');
+                    }
+                }
+            }
+            
+            // Atualizar conteúdo conforme a tab
+            switch(tabId) {
+                case 'tab-home':
+                    updateDashboard();
+                    updateRecentOrders();
+                    break;
+                case 'tab-dashboard':
+                    updateDashboard();
+                    updateDashboardCharts();
+                    break;
+                case 'tab-lista':
+                    renderClientList();
+                    break;
+                case 'tab-fornecedor':
+                    renderSupplierList();
+                    renderSupplierChips();
+                    break;
+                case 'tab-relatorios':
+                    updateReportCharts();
+                    break;
+            }
+        }
+
+        // ==================== DASHBOARD ====================
+        function updateDashboard() {
+            const totalOrders = state.orders.length;
+            const uniqueClients = new Set(state.orders.map(o => o.clientName).filter(Boolean)).size;
+            const totalSales = state.orders.reduce((sum, o) => sum + toNumber(o.totalSale), 0);
+            const totalProfit = state.orders.reduce((sum, o) => sum + toNumber(o.profit), 0);
+            const pendingCount = state.orders.filter(o => o.status === 'Pendente').length;
+            
+            // Atualizar cards da home
+            updateElement('homeOrders', totalOrders);
+            updateElement('homeClients', uniqueClients);
+            updateElement('homeSales', formatCurrency(totalSales));
+            updateElement('homeProfit', formatCurrency(totalProfit));
+            
+            // Atualizar cards do dashboard
+            updateElement('dashOrders', totalOrders);
+            updateElement('dashClients', uniqueClients);
+            updateElement('dashSales', formatCurrency(totalSales));
+            updateElement('dashProfit', formatCurrency(totalProfit));
+            
+            // Badge de pendentes
+            updateElement('pendingBadge', pendingCount);
+        }
+
+        function updateElement(id, value) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.textContent = value;
+            }
+        }
+
+        function updateRecentOrders() {
+            const tbody = document.getElementById('homeRecentOrders');
+            if (!tbody) return;
+            
+            const recentOrders = state.orders.slice(-5).reverse();
+            
+            if (recentOrders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted p-2">Nenhum pedido cadastrado</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = recentOrders.map(order => `
+                <tr>
+                    <td>${escapeHtml(order.orderNumber)}</td>
+                    <td>${escapeHtml(order.clientName)}</td>
+                    <td>${formatCurrency(order.totalSale)}</td>
+                    <td><span class="badge badge-${getOrderStatusClass(order.status)}">${order.status}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        function getOrderStatusClass(status) {
+            const statusMap = {
+                'Pendente': 'pending',
+                'Encomendado': 'ordered',
+                'Entregue': 'delivered'
+            };
+            return statusMap[status] || 'pending';
+        }
+
+        function getPaymentStatusClass(status) {
+            const statusMap = {
+                'Pendente': 'unpaid',
+                'Parcial': 'partial',
+                'Pago': 'paid'
+            };
+            return statusMap[status] || 'unpaid';
+        }
+
+        // ==================== GRÁFICOS ====================
+        function updateAllCharts() {
+            if (document.getElementById('tab-dashboard')?.classList.contains('active')) {
+                updateDashboardCharts();
+            }
+            if (document.getElementById('tab-relatorios')?.classList.contains('active')) {
+                updateReportCharts();
+            }
+        }
+
+        function updateDashboardCharts() {
+            // Gráfico de Vendas
+            const salesCanvas = document.getElementById('chartSales');
+            if (salesCanvas) {
+                destroyChart('dashboard', 'sales');
+                
+                const salesData = {};
+                state.orders.forEach(order => {
+                    const date = order.orderDate;
+                    if (date) {
+                        salesData[date] = (salesData[date] || 0) + toNumber(order.totalSale);
+                    }
+                });
+                
+                const dates = Object.keys(salesData).sort().slice(-7);
+                const values = dates.map(date => salesData[date]);
+                
+                const ctx = salesCanvas.getContext('2d');
+                state.chartInstances.dashboard.sales = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            label: 'Vendas (R$)',
+                            data: values,
+                            borderColor: '#FF6B35',
+                            backgroundColor: 'rgba(255, 107, 53, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 4,
+                            pointHoverRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: {
+                            intersect: false,
+                            mode: 'index'
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: (context) => `R$ ${context.parsed.y.toFixed(2)}`
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de Status
+            const statusCanvas = document.getElementById('chartStatus');
+            if (statusCanvas) {
+                destroyChart('dashboard', 'status');
+                
+                const statusCounts = {
+                    'Pendente': state.orders.filter(o => o.status === 'Pendente').length,
+                    'Encomendado': state.orders.filter(o => o.status === 'Encomendado').length,
+                    'Entregue': state.orders.filter(o => o.status === 'Entregue').length
+                };
+                
+                const ctx = statusCanvas.getContext('2d');
+                state.chartInstances.dashboard.status = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Pendente', 'Encomendado', 'Entregue'],
+                        datasets: [{
+                            data: [statusCounts.Pendente, statusCounts.Encomendado, statusCounts.Entregue],
+                            backgroundColor: ['#F59E0B', '#3B82F6', '#10B981'],
+                            borderWidth: 2,
+                            borderColor: '#FFFFFF'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function updateReportCharts() {
+            const period = document.getElementById('reportPeriod')?.value || 'month';
+            const filteredOrders = filterOrdersByPeriod(period);
+            
+            // Gráfico de Vendas do Relatório
+            const salesCanvas = document.getElementById('reportSalesChart');
+            if (salesCanvas) {
+                destroyChart('reports', 'sales');
+                
+                const salesData = {};
+                filteredOrders.forEach(order => {
+                    const date = order.orderDate;
+                    if (date) {
+                        salesData[date] = (salesData[date] || 0) + toNumber(order.totalSale);
+                    }
+                });
+                
+                const dates = Object.keys(salesData).sort();
+                const values = dates.map(date => salesData[date]);
+                
+                const ctx = salesCanvas.getContext('2d');
+                state.chartInstances.reports.sales = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            label: 'Vendas (R$)',
+                            data: values,
+                            backgroundColor: '#FF6B35',
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: (context) => `R$ ${context.parsed.y.toFixed(2)}`
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de Lucro do Relatório
+            const profitCanvas = document.getElementById('reportProfitChart');
+            if (profitCanvas) {
+                destroyChart('reports', 'profit');
+                
+                const profitData = {};
+                filteredOrders.forEach(order => {
+                    const date = order.orderDate;
+                    if (date) {
+                        profitData[date] = (profitData[date] || 0) + toNumber(order.profit);
+                    }
+                });
+                
+                const dates = Object.keys(profitData).sort();
+                const values = dates.map(date => profitData[date]);
+                
+                const ctx = profitCanvas.getContext('2d');
+                state.chartInstances.reports.profit = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            label: 'Lucro (R$)',
+                            data: values,
+                            borderColor: '#10B981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: (context) => `R$ ${context.parsed.y.toFixed(2)}`
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function destroyChart(group, key) {
+            if (state.chartInstances[group]?.[key]) {
+                state.chartInstances[group][key].destroy();
+                state.chartInstances[group][key] = null;
+            }
+        }
+
+        function filterOrdersByPeriod(period) {
+            const now = new Date();
+            let startDate;
+            
+            switch(period) {
+                case 'today':
+                    startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    break;
+                case 'week':
+                    startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay());
+                    break;
+                case 'month':
+                    startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+                    break;
+                case 'year':
+                    startDate = new Date(now.getFullYear(), 0, 1);
+                    break;
+                default:
+                    return state.orders;
+            }
+            
+            return state.orders.filter(order => {
+                const orderDate = new Date(order.orderDate + 'T00:00:00');
+                return orderDate >= startDate;
+            });
+        }
+
+        // ==================== PRODUTOS ====================
+        function addProduct(productData = null) {
+            const productId = 'prod_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+            const productsList = document.getElementById('productsList');
+            
+            const productHTML = `
+                <div class="product-item" id="${productId}" data-product-id="${productId}">
+                    <div class="product-grid">
+                        <div class="form-group">
+                            <label class="form-label">Produto *</label>
+                            <input type="text" 
+                                   class="form-input product-name" 
+                                   value="${escapeHtml(productData?.name || '')}" 
+                                   placeholder="Nome do produto"
+                                   required
+                                   aria-label="Nome do produto">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Quantidade *</label>
+                            <input type="text" 
+                                   inputmode="decimal"
+                                   class="form-input product-qty" 
+                                   value="${productData?.quantity || ''}" 
+                                   placeholder="1"
+                                   required
+                                   oninput="sanitizeNumericInput(this); calculateTotals()"
+                                   aria-label="Quantidade">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Valor Compra (un.) *</label>
+                            <input type="text" 
+                                   inputmode="decimal"
+                                   class="form-input product-purchase" 
+                                   value="${productData?.purchasePrice || ''}" 
+                                   placeholder="0,00"
+                                   required
+                                   oninput="sanitizeNumericInput(this); calculateTotals()"
+                                   aria-label="Valor de compra unitário">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Valor Venda (un.) *</label>
+                            <input type="text" 
+                                   inputmode="decimal"
+                                   class="form-input product-sale" 
+                                   value="${productData?.salePrice || ''}" 
+                                   placeholder="0,00"
+                                   required
+                                   oninput="sanitizeNumericInput(this); calculateTotals()"
+                                   aria-label="Valor de venda unitário">
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center mt-1">
+                        <span class="text-xs text-muted">
+                            Subtotal: <strong class="product-subtotal">R$ 0,00</strong>
+                        </span>
+                        <button type="button" 
+                                class="btn btn-danger btn-sm" 
+                                onclick="removeProduct('${productId}')"
+                                aria-label="Remover produto">
+                            <i class="fas fa-trash"></i> Remover
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            productsList.insertAdjacentHTML('beforeend', productHTML);
+            calculateTotals();
+        }
+
+        function removeProduct(productId) {
+            const productElement = document.getElementById(productId);
+            if (productElement) {
+                productElement.style.opacity = '0';
+                productElement.style.transform = 'translateX(20px)';
+                productElement.style.transition = 'all 0.2s ease';
+                
+                setTimeout(() => {
+                    productElement.remove();
+                    calculateTotals();
+                }, 200);
+            }
+        }
+
+        function calculateTotals() {
+            let totalPurchase = 0;
+            let totalSale = 0;
+            
+            document.querySelectorAll('.product-item').forEach(item => {
+                const qty = toNumber(item.querySelector('.product-qty')?.value);
+                const purchasePrice = toNumber(item.querySelector('.product-purchase')?.value);
+                const salePrice = toNumber(item.querySelector('.product-sale')?.value);
+                
+                const subtotal = roundCurrency(qty * salePrice);
+                totalPurchase = roundCurrency(totalPurchase + roundCurrency(qty * purchasePrice));
+                totalSale = roundCurrency(totalSale + subtotal);
+                
+                // Atualizar subtotal do produto
+                const subtotalElement = item.querySelector('.product-subtotal');
+                if (subtotalElement) {
+                    subtotalElement.textContent = formatCurrency(subtotal);
+                }
+            });
+            
+            const profit = roundCurrency(totalSale - totalPurchase);
+            
+            // CORREÇÃO: Atualizar totais com formatação correta
+            document.getElementById('formPurchase').textContent = formatCurrency(totalPurchase);
+            document.getElementById('formSale').textContent = formatCurrency(totalSale);
+            document.getElementById('formProfit').textContent = formatCurrency(profit);
+            
+            // Retornar valores para uso em saveOrder
+            return { totalPurchase, totalSale, profit };
+        }
+
+        // ==================== PEDIDOS ====================
+        function saveOrder() {
+            // Validar campos obrigatórios
+            const clientName = document.getElementById('clientName').value.trim();
+            const clientCity = document.getElementById('clientCity').value.trim();
+            const orderDate = document.getElementById('orderDate').value;
+            
+            if (!clientName) {
+                showToast('Por favor, informe o nome do cliente.', 'error');
+                document.getElementById('clientName').focus();
+                return;
+            }
+            
+            if (!clientCity) {
+                showToast('Por favor, informe a cidade do cliente.', 'error');
+                document.getElementById('clientCity').focus();
+                return;
+            }
+            
+            if (!orderDate) {
+                showToast('Por favor, informe a data do pedido.', 'error');
+                document.getElementById('orderDate').focus();
+                return;
+            }
+            
+            // Coletar produtos
+            const products = [];
+            const productElements = document.querySelectorAll('.product-item');
+            
+            if (productElements.length === 0) {
+                showToast('Adicione pelo menos um produto ao pedido.', 'error');
+                return;
+            }
+            
+            let hasError = false;
+            
+            productElements.forEach(item => {
+                const name = item.querySelector('.product-name')?.value.trim();
+                const qty = toNumber(item.querySelector('.product-qty')?.value);
+                const purchasePrice = toNumber(item.querySelector('.product-purchase')?.value);
+                const salePrice = toNumber(item.querySelector('.product-sale')?.value);
+                
+                if (!name) {
+                    showToast('Todos os produtos precisam ter um nome.', 'error');
+                    item.querySelector('.product-name')?.focus();
+                    hasError = true;
+                    return;
+                }
+                
+                if (qty <= 0) {
+                    showToast('A quantidade deve ser maior que zero.', 'error');
+                    item.querySelector('.product-qty')?.focus();
+                    hasError = true;
+                    return;
+                }
+                
+                products.push({
+                    name,
+                    quantity: qty,
+                    purchasePrice,
+                    salePrice
+                });
+            });
+            
+            if (hasError) return;
+            
+            // Calcular totais
+            const totals = calculateTotals();
+            
+            // Criar objeto do pedido
+            const isNewOrder = state.currentEditIndex === null;
+            const order = {
+                orderNumber: isNewOrder ? commitOrderNumber() : state.orders[state.currentEditIndex].orderNumber,
+                clientName,
+                clientCity,
+                clientPhone: document.getElementById('clientPhone').value.trim(),
+                orderDate,
+                notes: document.getElementById('orderNotes').value.trim(),
+                products,
+                totalPurchase: totals.totalPurchase,
+                totalSale: totals.totalSale,
+                profit: totals.profit,
+                status: document.getElementById('orderStatus').value,
+                paymentStatus: document.getElementById('paymentStatus').value,
+                supplier: document.getElementById('supplierSelect').value,
+                id: state.currentEditIndex !== null ? state.orders[state.currentEditIndex].id : Date.now(),
+                createdAt: state.currentEditIndex !== null ? state.orders[state.currentEditIndex].createdAt : new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            
+            // Salvar ou atualizar
+            if (state.currentEditIndex !== null) {
+                state.orders[state.currentEditIndex] = order;
+                state.currentEditIndex = null;
+                document.getElementById('editOrderBtn').style.display = 'none';
+                document.getElementById('deleteOrderBtn').style.display = 'none';
+                showToast('Pedido atualizado com sucesso! ✅', 'success');
+            } else {
+                state.orders.push(order);
+                showToast('Pedido salvo com sucesso! ✅', 'success');
+            }
+            
+            saveState();
+            clearForm();
+            updateDashboard();
+            updateRecentOrders();
+            if (document.getElementById('tab-dashboard')?.classList.contains('active')) {
+                updateDashboardCharts();
+            }
+        }
+
+        function editCurrentOrder() {
+            if (state.currentEditIndex === null) return;
+            
+            const order = state.orders[state.currentEditIndex];
+            
+            // Preencher campos
+            document.getElementById('orderNumber').value = order.orderNumber;
+            document.getElementById('clientName').value = order.clientName;
+            document.getElementById('clientCity').value = order.clientCity;
+            document.getElementById('clientPhone').value = order.clientPhone || '';
+            document.getElementById('orderDate').value = order.orderDate;
+            document.getElementById('orderNotes').value = order.notes || '';
+            document.getElementById('orderStatus').value = order.status;
+            document.getElementById('paymentStatus').value = order.paymentStatus || 'Pendente';
+            document.getElementById('supplierSelect').value = order.supplier || '';
+            
+            // Limpar e adicionar produtos
+            document.getElementById('productsList').innerHTML = '';
+            order.products.forEach(product => addProduct({
+                name: product.name,
+                quantity: product.quantity,
+                purchasePrice: product.purchasePrice,
+                salePrice: product.salePrice
+            }));
+            
+            calculateTotals();
+            
+            // Navegar para tab de cadastro
+            const cadastroNavItem = document.querySelectorAll('.nav-item')[1];
+            showTab('tab-cadastro', cadastroNavItem);
+        }
+
+        function deleteCurrentOrder() {
+            if (state.currentEditIndex === null) return;
+            
+            if (confirm('Tem certeza que deseja excluir este pedido? Esta ação não pode ser desfeita.')) {
+                state.orders.splice(state.currentEditIndex, 1);
+                saveState();
+                clearForm();
+                updateDashboard();
+                updateRecentOrders();
+                if (document.getElementById('tab-dashboard')?.classList.contains('active')) {
+                    updateDashboardCharts();
+                }
+                showToast('Pedido excluído com sucesso!', 'success');
+            }
+        }
+
+        function clearForm() {
+            document.getElementById('orderForm').reset();
+            document.getElementById('productsList').innerHTML = '';
+            
+            state.currentEditIndex = null;
+            document.getElementById('editOrderBtn').style.display = 'none';
+            document.getElementById('deleteOrderBtn').style.display = 'none';
+            
+            document.getElementById('orderNumber').value = peekOrderNumber();
+            document.getElementById('orderDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('orderStatus').value = 'Pendente';
+            document.getElementById('paymentStatus').value = 'Pendente';
+            
+            document.getElementById('formPurchase').textContent = 'R$ 0,00';
+            document.getElementById('formSale').textContent = 'R$ 0,00';
+            document.getElementById('formProfit').textContent = 'R$ 0,00';
+            
+            addProduct();
+            updateSupplierSelect();
+        }
+
+        // ==================== LISTA DE CLIENTES ====================
+        function renderClientList() {
+            const searchName = (document.getElementById('searchName')?.value || '').toLowerCase().trim();
+            const searchCity = (document.getElementById('searchCity')?.value || '').toLowerCase().trim();
+            const filterStatus = document.getElementById('filterStatus')?.value || '';
+            
+            let filteredOrders = state.orders.filter(order => {
+                const matchName = !searchName || order.clientName.toLowerCase().includes(searchName);
+                const matchCity = !searchCity || order.clientCity.toLowerCase().includes(searchCity);
+                const matchStatus = !filterStatus || order.status === filterStatus;
+                return matchName && matchCity && matchStatus;
+            });
+            
+            const tbody = document.getElementById('clientTableBody');
+            if (!tbody) return;
+            
+            if (filteredOrders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted p-2">Nenhum pedido encontrado</td></tr>';
+            } else {
+                tbody.innerHTML = filteredOrders.map(order => {
+                    const originalIndex = state.orders.indexOf(order);
+                    return `
+                        <tr>
+                            <td>${escapeHtml(order.orderNumber)}</td>
+                            <td>${escapeHtml(order.clientName)}</td>
+                            <td>${order.products.length}</td>
+                            <td>${formatCurrency(order.totalSale)}</td>
+                            <td>${formatDate(order.orderDate)}</td>
+                            <td>
+                                <span class="badge badge-${getOrderStatusClass(order.status)}">${order.status}</span>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-outline btn-sm" onclick="viewOrderDetails(${originalIndex})" title="Visualizar" aria-label="Visualizar pedido">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-outline btn-sm" onclick="editOrder(${originalIndex})" title="Editar" aria-label="Editar pedido">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline btn-sm" onclick="deleteOrderByIndex(${originalIndex})" title="Excluir" aria-label="Excluir pedido">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+            
+            // Atualizar totais
+            const totalSales = filteredOrders.reduce((sum, order) => sum + toNumber(order.totalSale), 0);
+            document.getElementById('clientCount').textContent = filteredOrders.length;
+            document.getElementById('clientTotal').textContent = formatCurrency(totalSales);
+        }
+
+        function editOrder(index) {
+            state.currentEditIndex = index;
+            document.getElementById('editOrderBtn').style.display = 'inline-flex';
+            document.getElementById('deleteOrderBtn').style.display = 'inline-flex';
+            editCurrentOrder();
+        }
+
+        function deleteOrderByIndex(index) {
+            if (confirm('Tem certeza que deseja excluir este pedido?')) {
+                state.orders.splice(index, 1);
+                saveState();
+                renderClientList();
+                updateDashboard();
+                updateRecentOrders();
+                if (document.getElementById('tab-dashboard')?.classList.contains('active')) {
+                    updateDashboardCharts();
+                }
+                showToast('Pedido excluído com sucesso!', 'success');
+            }
+        }
+
+        let currentSort = { field: null, direction: 'asc' };
+
+        function sortOrders(field) {
+            // Alterna a direção se a mesma coluna for clicada novamente
+            if (currentSort.field === field) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.field = field;
+                currentSort.direction = 'asc';
+            }
+            const dir = currentSort.direction === 'asc' ? 1 : -1;
+
+            state.orders.sort((a, b) => {
+                let valueA = a[field];
+                let valueB = b[field];
+                
+                if (typeof valueA === 'string') valueA = valueA.toLowerCase();
+                if (typeof valueB === 'string') valueB = valueB.toLowerCase();
+                
+                if (valueA < valueB) return -1 * dir;
+                if (valueA > valueB) return 1 * dir;
+                return 0;
+            });
+            
+            saveState();
+            updateSortIndicators();
+            renderClientList();
+        }
+
+        function updateSortIndicators() {
+            document.querySelectorAll('#tab-lista th[id^="th-"]').forEach(th => {
+                const icon = th.querySelector('i');
+                const field = th.id.replace('th-', '');
+                if (field === currentSort.field) {
+                    th.setAttribute('aria-sort', currentSort.direction === 'asc' ? 'ascending' : 'descending');
+                    if (icon) icon.className = currentSort.direction === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down';
+                } else {
+                    th.setAttribute('aria-sort', 'none');
+                    if (icon) icon.className = 'fas fa-sort';
+                }
+            });
+        }
+
+        function viewOrderDetails(index) {
+            const order = state.orders[index];
+            if (!order) return;
+            
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div class="mb-2">
+                    <p><strong>📋 Pedido:</strong> ${escapeHtml(order.orderNumber)}</p>
+                    <p><strong>👤 Cliente:</strong> ${escapeHtml(order.clientName)}</p>
+                    <p><strong>🏙️ Cidade:</strong> ${escapeHtml(order.clientCity)}</p>
+                    <p><strong>📱 Telefone:</strong> ${escapeHtml(order.clientPhone || 'N/A')}</p>
+                    <p><strong>📅 Data:</strong> ${formatDate(order.orderDate)}</p>
+                    <p><strong>📊 Status:</strong> <span class="badge badge-${getOrderStatusClass(order.status)}">${order.status}</span></p>
+                    <p><strong>💳 Pagamento:</strong> <span class="badge badge-${getPaymentStatusClass(order.paymentStatus)}">${order.paymentStatus || 'Pendente'}</span></p>
+                    <p><strong>🏭 Fornecedor:</strong> ${escapeHtml(order.supplier || 'N/A')}</p>
+                    <p><strong>📝 Observações:</strong> ${escapeHtml(order.notes || 'N/A')}</p>
+                </div>
+                
+                <h4 class="font-semibold mb-1">📦 Produtos:</h4>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Qtd</th>
+                                <th>Valor Un.</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${order.products.map(product => `
+                                <tr>
+                                    <td>${escapeHtml(product.name)}</td>
+                                    <td>${product.quantity}</td>
+                                    <td>${formatCurrency(product.salePrice)}</td>
+                                    <td>${formatCurrency(product.quantity * product.salePrice)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="totals-bar mt-2">
+                    <div class="total-item">Compra <span>${formatCurrency(order.totalPurchase)}</span></div>
+                    <div class="total-item">Venda <span>${formatCurrency(order.totalSale)}</span></div>
+                    <div class="total-item">Lucro <span>${formatCurrency(order.profit)}</span></div>
+                </div>
+            `;
+            
+            document.getElementById('detailsModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('detailsModal').classList.remove('active');
+        }
+
+        // ==================== FORNECEDOR ====================
+        function renderSupplierList() {
+            const productMap = new Map();
+            
+            state.orders.forEach(order => {
+                const supplierName = order.supplier || 'Não definido';
+                order.products.forEach(product => {
+                    const key = `${product.name}|${product.purchasePrice}|${supplierName}`;
+                    
+                    if (productMap.has(key)) {
+                        const existing = productMap.get(key);
+                        existing.totalQuantity += product.quantity;
+                        existing.totalValue = roundCurrency(existing.totalValue + product.quantity * product.purchasePrice);
+                    } else {
+                        productMap.set(key, {
+                            name: product.name,
+                            totalQuantity: product.quantity,
+                            unitPrice: product.purchasePrice,
+                            totalValue: roundCurrency(product.quantity * product.purchasePrice),
+                            supplier: supplierName
+                        });
+                    }
+                });
+            });
+            
+            const tbody = document.getElementById('supplierTableBody');
+            if (!tbody) return;
+            
+            if (productMap.size === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted p-2">Nenhum produto cadastrado</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = '';
+            productMap.forEach(product => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${escapeHtml(product.name)}</td>
+                        <td>${product.totalQuantity}</td>
+                        <td>${formatCurrency(product.unitPrice)}</td>
+                        <td>${formatCurrency(product.totalValue)}</td>
+                        <td>${escapeHtml(product.supplier)}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function updateSupplierSelect() {
+            const select = document.getElementById('supplierSelect');
+            if (!select) return;
+            
+            const previousValue = select.value;
+            select.innerHTML = '<option value="">Selecione um fornecedor...</option>';
+            state.suppliers.forEach(supplier => {
+                select.innerHTML += `<option value="${escapeHtml(supplier.name)}">${escapeHtml(supplier.name)}</option>`;
+            });
+            if (previousValue && state.suppliers.some(s => s.name === previousValue)) {
+                select.value = previousValue;
+            }
+        }
+
+        function addSupplier() {
+            const input = document.getElementById('newSupplierName');
+            const name = input.value.trim();
+            
+            if (!name) {
+                showToast('Informe o nome do fornecedor.', 'error');
+                input.focus();
+                return;
+            }
+            
+            if (state.suppliers.some(s => s.name.toLowerCase() === name.toLowerCase())) {
+                showToast('Este fornecedor já está cadastrado.', 'warning');
+                return;
+            }
+            
+            state.suppliers.push({ id: Date.now(), name });
+            saveState();
+            input.value = '';
+            renderSupplierChips();
+            updateSupplierSelect();
+            showToast('Fornecedor adicionado! ✅', 'success');
+        }
+
+        function removeSupplier(id) {
+            if (!confirm('Remover este fornecedor da lista?')) return;
+            state.suppliers = state.suppliers.filter(s => s.id !== id);
+            saveState();
+            renderSupplierChips();
+            updateSupplierSelect();
+            showToast('Fornecedor removido.', 'success');
+        }
+
+        function renderSupplierChips() {
+            const container = document.getElementById('supplierChipsList');
+            if (!container) return;
+            
+            if (state.suppliers.length === 0) {
+                container.innerHTML = '<span class="text-sm text-muted">Nenhum fornecedor cadastrado ainda.</span>';
+                return;
+            }
+            
+            container.innerHTML = state.suppliers.map(supplier => `
+                <span class="badge badge-ordered" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.6rem;">
+                    ${escapeHtml(supplier.name)}
+                    <i class="fas fa-times cursor-pointer" style="cursor:pointer;" onclick="removeSupplier(${supplier.id})" role="button" aria-label="Remover ${escapeHtml(supplier.name)}"></i>
+                </span>
+            `).join('');
+        }
+
+        // ==================== EXPORTAÇÃO ====================
+        function exportToExcel() {
+            try {
+                let csv = '\uFEFF';
+                csv += 'Produto;Quantidade Total;Valor Unitário;Valor Total;Fornecedor\n';
+                
+                document.querySelectorAll('#supplierTableBody tr').forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length >= 5) {
+                        csv += [
+                            cells[0]?.textContent || '',
+                            cells[1]?.textContent || '',
+                            cells[2]?.textContent || '',
+                            cells[3]?.textContent || '',
+                            cells[4]?.textContent || ''
+                        ].join(';') + '\n';
+                    }
+                });
+                
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `lista_fornecedor_${new Date().toISOString().split('T')[0]}.csv`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                
+                showToast('Arquivo exportado com sucesso!', 'success');
+            } catch (error) {
+                console.error('Erro ao exportar:', error);
+                showToast('Erro ao exportar arquivo.', 'error');
+            }
+        }
+
+        function shareWhatsApp() {
+            let message = '*🏭 Lista para Fornecedor - Pedido Fácil*\n\n';
+            message += `📅 Data: ${new Date().toLocaleDateString('pt-BR')}\n\n`;
+            
+            const rows = document.querySelectorAll('#supplierTableBody tr');
+            if (rows.length === 0) {
+                message += 'Nenhum produto cadastrado.';
+            } else {
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length >= 5) {
+                        message += `📦 *${cells[0]?.textContent}*\n`;
+                        message += `   Quantidade: ${cells[1]?.textContent}\n`;
+                        message += `   Valor Unitário: ${cells[2]?.textContent}\n`;
+                        message += `   Valor Total: ${cells[3]?.textContent}\n`;
+                        message += `   Fornecedor: ${cells[4]?.textContent}\n\n`;
+                    }
+                });
+            }
+            
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+        }
+
+        function exportBackup() {
+            try {
+                const backup = {
+                    version: '2.0',
+                    exportDate: new Date().toISOString(),
+                    data: {
+                        orders: state.orders,
+                        suppliers: state.suppliers,
+                        orderCounter: state.orderCounter
+                    }
+                };
+                
+                const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `backup_pedido_facil_${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                
+                showToast('Backup exportado com sucesso! 💾', 'success');
+            } catch (error) {
+                console.error('Erro ao exportar backup:', error);
+                showToast('Erro ao exportar backup.', 'error');
+            }
+        }
+
+        function importBackup(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (!confirm('⚠️ Importar backup substituirá todos os dados atuais. Deseja continuar?')) {
+                event.target.value = '';
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const backup = JSON.parse(e.target.result);
+                    
+                    if (!backup.data || !backup.data.orders) {
+                        throw new Error('Formato de backup inválido');
+                    }
+                    
+                    state.orders = backup.data.orders;
+                    state.suppliers = backup.data.suppliers || [];
+                    state.orderCounter = backup.data.orderCounter || state.orders.length;
+                    
+                    if (saveState()) {
+                        clearForm();
+                        renderClientList();
+                        renderSupplierList();
+                        renderSupplierChips();
+                        updateDashboard();
+                        updateRecentOrders();
+                        if (document.getElementById('tab-dashboard')?.classList.contains('active')) {
+                            updateDashboardCharts();
+                        }
+                        showToast('Backup importado com sucesso! ✅', 'success');
+                    }
+                } catch (error) {
+                    console.error('Erro ao importar backup:', error);
+                    showToast('Erro ao importar backup. Arquivo inválido.', 'error');
+                }
+            };
+            
+            reader.onerror = function() {
+                showToast('Erro ao ler o arquivo.', 'error');
+            };
+            
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function exportReportExcel() {
+            try {
+                const period = document.getElementById('reportPeriod');
+                const periodText = period?.options[period.selectedIndex]?.text || 'Período';
+                const periodValue = period?.value || 'month';
+                const filtered = filterOrdersByPeriod(periodValue);
+                
+                const totalPurchase = filtered.reduce((sum, o) => sum + toNumber(o.totalPurchase), 0);
+                const totalSale = filtered.reduce((sum, o) => sum + toNumber(o.totalSale), 0);
+                const totalProfit = totalSale - totalPurchase;
+                const margin = totalSale > 0 ? ((totalProfit / totalSale) * 100) : 0;
+                
+                let csv = '\uFEFF';
+                csv += 'Relatório;Valor\n';
+                csv += `Período;${periodText}\n`;
+                csv += `Total Pedidos;${filtered.length}\n`;
+                csv += `Total Compras;${formatCurrency(totalPurchase)}\n`;
+                csv += `Total Vendas;${formatCurrency(totalSale)}\n`;
+                csv += `Lucro Total;${formatCurrency(totalProfit)}\n`;
+                csv += `Margem;${margin.toFixed(2)}%\n`;
+                
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `relatorio_${new Date().toISOString().split('T')[0]}.csv`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                
+                showToast('Relatório exportado com sucesso!', 'success');
+            } catch (error) {
+                console.error('Erro ao exportar relatório:', error);
+                showToast('Erro ao exportar relatório.', 'error');
+            }
+        }
+
+        // ==================== INICIALIZAÇÃO ====================
+        function init() {
+            loadState();
+            initTheme();
+            updateOnlineStatus();
+            updateSupplierSelect();
+            clearForm();
+            updateDashboard();
+            
+            // Renderizar listas iniciais
+            renderClientList();
+            renderSupplierList();
+            renderSupplierChips();
+            updateSortIndicators();
+            
+            // Event listeners globais
+            window.addEventListener('click', function(event) {
+                const modal = document.getElementById('detailsModal');
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    closeModal();
+                }
+            });
+            
+            console.log('✅ Pedido Fácil inicializado com sucesso!');
+            console.log(`📊 ${state.orders.length} pedidos carregados`);
+            console.log(`👥 ${new Set(state.orders.map(o => o.clientName)).size} clientes únicos`);
+            console.log(`💰 Total em vendas: ${formatCurrency(state.orders.reduce((s, o) => s + toNumber(o.totalSale), 0))}`);
+        }
+
+        // Iniciar aplicação
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
