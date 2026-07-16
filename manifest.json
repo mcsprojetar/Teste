@@ -1,0 +1,37 @@
+{
+    "name": "Pedido Fácil - Gestão de Pedidos",
+    "short_name": "Pedido Fácil",
+    "description": "Sistema completo de gestão de pedidos e clientes",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "display_override": ["standalone", "fullscreen", "minimal-ui"],
+    "orientation": "portrait-primary",
+    "background_color": "#F9FAFB",
+    "theme_color": "#FF6B35",
+    "scope": "./",
+    "lang": "pt-BR",
+    "categories": ["business", "productivity", "utilities"],
+    "icons": [
+        {
+            "src": "data:image/svg+xml,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjM4LjQiIGZpbGw9IiNGRjZCMzUiLz48dGV4dCB4PSI5NiIgeT0iMTEwIiBmb250LXNpemU9IjgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSI+8J+TpjwvdGV4dD48L3N2Zz4=",
+            "sizes": "192x192",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "data:image/svg+xml,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjEwMi40IiBmaWxsPSIjRkY2QjM1Ii8+PHRleHQgeD0iMjU2IiB5PSIzMDAiIGZvbnQtc2l6ZT0iMjAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSI+8J+TpjwvdGV4dD48L3N2Zz4=",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "data:image/svg+xml,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDgwIDE5MjAiPjxyZWN0IHdpZHRoPSIxMDgwIiBoZWlnaHQ9IjE5MjAiIGZpbGw9IiNGRjZCMzUiLz48dGV4dCB4PSI1NDAiIHk9Ijk2MCIgZm9udC1zaXplPSIxMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IndoaXRlIj7wn5OmPC90ZXh0Pjx0ZXh0IHg9IjU0MCIgeT0iMTEwMCIgZm9udC1zaXplPSI2MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOCI+UGVkaWRvIEbDoWNpbDwvdGV4dD48L3N2Zz4=",
+            "sizes": "1080x1920",
+            "type": "image/svg+xml",
+            "form_factor": "narrow",
+            "label": "Tela inicial do Pedido Fácil"
+        }
+    ]
+}
